@@ -61,11 +61,23 @@
 
     function Rooms($firebaseArray, CONFIG){
       var ref = new Firebase(CONFIG.FIREBASE_URL);
+      var roomsWithLastMessage = []
       var rooms = $firebaseArray(ref.child('rooms'));
 
       return {
         all: function () {
-          return rooms;
+          rooms.$loaded().then(function(response){
+            angular.forEach(response, function(room){
+              roomsWithLastMessage.push(room);
+              ref.child('rooms').child(room.$id).child('messages')
+                .orderByChild("timestamp")
+                .limitToLast(1)
+                .on("child_added", function(snapshot) {
+                  room["last_message_content"] = snapshot.val().content;
+                });
+            })
+          });
+          return roomsWithLastMessage;
         },
         get: function (roomId) {
           // Simple index lookup

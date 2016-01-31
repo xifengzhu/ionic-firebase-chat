@@ -7,8 +7,10 @@
     <ion-content>
       <ion-list ng-show="vm.rooms">
         <ion-item class="item-icon-left" ng-repeat="room in vm.rooms" type="item-text-wrap" ng-click="vm.openChatRoom(room.$id)">
-            <i class="icon {{room.icon}}"></i>
-            <h2>{{room.name}}</h2>
+          <h2>{{room.name}}</h2>
+          <p>
+            last message: {{ room.last_message_content }}
+          </p>
         </ion-item>
       </ion-list>
       <ion-list ng-hide="vm.rooms.length">

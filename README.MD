@@ -10,6 +10,7 @@ In order to user Firebase, you need to have an account with them. You can sign u
 ```
 bower install firebase --save
 bower install angularfire --save
+bower install angular-md5 --save  // md5 for Angular.js and Gravatar filter
 ```
 
 3.Replace the firebase url with your's in `www/js/configs.js`

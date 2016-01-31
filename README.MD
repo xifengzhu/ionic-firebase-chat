@@ -1,16 +1,18 @@
 ### Setup
 ionic-firebase-chat uses Firebase as a backend, so it requires no server-side code. It can be added to any web app by including a few JavaScript files
 
-1. Setting up a Firebase Account
+1.Setting up a Firebase Account
 
 In order to user Firebase, you need to have an account with them. You can sign up on the Hacker Plan for 50 Max Connections, 5 GB Data Transfer, 100 MB Data Storage, 1 GB Hosting Storage and 100 GB Hosting Transfer from this url: https://www.firebase.com/signup/
 
-2. install the lib by bower
+2.Install the lib by bower
+
 ```
 bower install firebase --save
 bower install angularfire --save
 ```
-3. replace the firebase url with you's in `www/js/configs.js`
+
+3.Replace the firebase url with your's in `www/js/configs.js`
 
 ### Data Structure
 

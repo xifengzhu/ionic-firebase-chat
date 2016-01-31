@@ -1,0 +1,12 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.0"
+  },
+  "dependencies": {
+    "angular-md5": "~0.1.10",
+    "firebase": "~2.4.0",
+    "angularfire": "~1.1.3"
+  }
+}

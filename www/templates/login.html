@@ -1,0 +1,39 @@
+<ion-view view-title="Login">
+  <ion-header-bar class="bar bar-header bar-assertive">
+    <h1 class="title">Login</h1>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list" style="text-align: center;">
+      <img src="img/chat-logo.png" class="logo" style="margin-top: 20px; width: 160px;">
+      <div class="logoText">
+          Chat
+      </div>
+    </div>
+    <div ng-show="error">
+      <span>{{ error.message }}</span>
+    </div>
+    <div class="list card padding">
+      <label class="item item-input">
+        <span class="input-label">Email</span>
+        <input type="text" ng-model="user.email">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="user.password">
+      </label>
+      <button ng-click="login(user)" class="button button-block button-assertive activated">
+        Sign In
+      </button>
+    </div>
+    <div class="list" style="text-align:center">
+      <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+        Create New Account
+      </button>
+
+      <button ng-click="signInWithFaceBook()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+        Login with facebook
+      </button>
+      <div id="fb-root"></div>
+    </div>
+  </ion-content>
+</ion-view>

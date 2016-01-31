@@ -1,0 +1,41 @@
+<ion-view view-title="{{ vm.room.name }}" class="chats-view">
+  <ion-content has-subheader="false" delegate-handle="chatScroll">
+    <div class="chat-content">
+      <div class="chat-msg-items">
+        <div class="chat-item"
+          ng-repeat="message in vm.messages track by $index"
+          ng-class="{true: 'me', false: 'you'}[message.from_email == vm.currentUser.email ]">
+          <!-- <div class="time">
+            11: 20
+          </div> -->
+          <div class="user-info">
+            <a href="javascript:;" class="avatar">
+              <img src="http://www.gravatar.com/avatar/{{ message.from_email | gravatar }}" width="100%">
+            </a>
+            <p class="name">{{ message.from }}</p>
+          </div>
+          <div class="msg-panel">
+            <div class="msg-text">
+              {{ message.message }}
+            </div>
+            <div class="triangle-arrow"></div>
+            <div class="triangle-arrow2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar keyboard-attach>
+    <form name="chatForm">
+      <div class="chat-input">
+        <div class="input-area">
+          <input type="text" ng-model="vm.newMessage" placeholder="Type in your message..." required>
+          <button class="send-msg-btn"
+            ng-disabled="!chatForm.$valid"
+            ng-click="vm.sendMessage(vm.newMessage)"> Send
+          </button>
+        </div>
+      </div>
+    </form>
+  </ion-footer-bar>
+</ion-view>

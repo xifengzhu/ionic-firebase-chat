@@ -1,0 +1,169 @@
+@import "_color";
+
+.chat-content {
+  padding: 20px 10px 0;
+  width: 100%;
+  background: $white;
+  overflow: hidden;
+  .chat-msg-items {
+    .chat-item {
+      padding: 10px 0;
+      .user-info {
+        .avatar {
+          width: 42px;
+          height: 42px;
+          border: 1px solid #EADDDD;
+          position: relative;
+          display: block;
+          img {
+            max-width: 100%;
+          }
+        }
+        .name {
+          text-align: center;
+        }
+      }
+    }
+    .msg-text {
+      table-layout: fixed;
+      word-break: break-all;
+      overflow: hidden;
+      font-size: 15px;
+    }
+    .me {
+      float: right;
+      width: 100%;
+      .user-info {
+        float: right;
+      }
+      .msg-panel {
+        float: right;
+        min-width: 50px;
+        max-width: 200px;
+        margin: 0 15px 0 0;
+        padding: 0.5em 2.27%;
+        background-color: #53a4da;
+        border-radius: 5px;
+        color: $white;
+        min-height: 30px;
+        position: relative;
+        .dop-icon {
+          position: absolute;
+          left: -8px;
+          bottom: -16px;
+          width: 24px;
+          height: 24px;
+          img {
+            width: 100%;
+          }
+        }
+      }
+      .triangle-arrow{
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-left: 10px solid #53a4da;
+        border-bottom: 8px solid transparent;
+        position: absolute;
+        right: -9px;
+        top: 22%;
+      }
+    }
+    .you {
+      float: left;
+      width: 100%;
+      .user-info{
+        float: left;
+      }
+      .msg-panel {
+        float: left;
+        min-width: 50px;
+        max-width: 200px;
+        margin: 0 0 0 15px;
+        padding: 7px;
+        background-color: $lightGray;
+        border-radius: 5px;
+        color: #42515f;
+        position: relative;
+        border: 1px solid #EAE6E6;
+        .dop-icon {
+          position: absolute;
+          right: -8px;
+          bottom: -16px;
+          width: 24px;
+          height: 24px;
+          img {
+            width: 100%;
+          }
+        }
+      }
+      .triangle-arrow, .triangle-arrow2 {
+        position: absolute;
+        top: 22%;
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+      }
+      .triangle-arrow {
+        border-right: 10px solid $lightGray;
+        left: -9px;
+        z-index: 2;
+      }
+      .triangle-arrow2 {
+        border-right: 10px solid $lightGray;
+        left: -11px;
+        z-index: 1;
+      }
+    }
+    .time {
+      font-size: 12px;
+      padding: 2px 0;
+      margin: 0px auto 10px;
+      border-radius: 20px;
+      color: $grey;
+      text-align: center;
+      text-shadow: 0 1px 0 $white;
+    }
+  }
+}
+
+.chat-input {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: $lightGray;
+  border-top: 1px solid $middleGray;
+  .input-area {
+    margin: 8px;
+    height: 30px;
+    input {
+      float: left;
+      width: 80%;
+      height: 30px;
+      outline: none;
+      border-radius: 2px;
+      padding-left: 6px;
+      display: inline-block;
+      border: 1px solid $middleGray;
+      border-radius: 5px;
+    }
+    .send-msg-btn {
+      float: right;
+      width: 18%;
+      height: 30px;
+      line-height: 30px;
+      border: none;
+      background: #53a4da;
+      border-radius: 5px;
+      position: relative;
+      top: 0;
+      color: $white;
+      outline: none;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,138 @@
+.chat-content {
+  padding: 20px 10px 0;
+  width: 100%;
+  background: #fff;
+  overflow: hidden; }
+  .chat-content .chat-msg-items .chat-item {
+    padding: 10px 0; }
+    .chat-content .chat-msg-items .chat-item .user-info .avatar {
+      width: 42px;
+      height: 42px;
+      border: 1px solid #EADDDD;
+      position: relative;
+      display: block; }
+      .chat-content .chat-msg-items .chat-item .user-info .avatar img {
+        max-width: 100%; }
+    .chat-content .chat-msg-items .chat-item .user-info .name {
+      text-align: center; }
+  .chat-content .chat-msg-items .msg-text {
+    table-layout: fixed;
+    word-break: break-all;
+    overflow: hidden;
+    font-size: 15px; }
+  .chat-content .chat-msg-items .me {
+    float: right;
+    width: 100%; }
+    .chat-content .chat-msg-items .me .user-info {
+      float: right; }
+    .chat-content .chat-msg-items .me .msg-panel {
+      float: right;
+      min-width: 50px;
+      max-width: 200px;
+      margin: 0 15px 0 0;
+      padding: 0.5em 2.27%;
+      background-color: #53a4da;
+      border-radius: 5px;
+      color: #fff;
+      min-height: 30px;
+      position: relative; }
+      .chat-content .chat-msg-items .me .msg-panel .dop-icon {
+        position: absolute;
+        left: -8px;
+        bottom: -16px;
+        width: 24px;
+        height: 24px; }
+        .chat-content .chat-msg-items .me .msg-panel .dop-icon img {
+          width: 100%; }
+    .chat-content .chat-msg-items .me .triangle-arrow {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 10px solid #53a4da;
+      border-bottom: 8px solid transparent;
+      position: absolute;
+      right: -9px;
+      top: 22%; }
+  .chat-content .chat-msg-items .you {
+    float: left;
+    width: 100%; }
+    .chat-content .chat-msg-items .you .user-info {
+      float: left; }
+    .chat-content .chat-msg-items .you .msg-panel {
+      float: left;
+      min-width: 50px;
+      max-width: 200px;
+      margin: 0 0 0 15px;
+      padding: 7px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      color: #42515f;
+      position: relative;
+      border: 1px solid #EAE6E6; }
+      .chat-content .chat-msg-items .you .msg-panel .dop-icon {
+        position: absolute;
+        right: -8px;
+        bottom: -16px;
+        width: 24px;
+        height: 24px; }
+        .chat-content .chat-msg-items .you .msg-panel .dop-icon img {
+          width: 100%; }
+    .chat-content .chat-msg-items .you .triangle-arrow, .chat-content .chat-msg-items .you .triangle-arrow2 {
+      position: absolute;
+      top: 22%;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent; }
+    .chat-content .chat-msg-items .you .triangle-arrow {
+      border-right: 10px solid #f2f2f2;
+      left: -9px;
+      z-index: 2; }
+    .chat-content .chat-msg-items .you .triangle-arrow2 {
+      border-right: 10px solid #f2f2f2;
+      left: -11px;
+      z-index: 1; }
+  .chat-content .chat-msg-items .time {
+    font-size: 12px;
+    padding: 2px 0;
+    margin: 0px auto 10px;
+    border-radius: 20px;
+    color: #ECF6ED;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff; }
+
+.chat-input {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background: #f2f2f2;
+  border-top: 1px solid #c9c8c7; }
+  .chat-input .input-area {
+    margin: 8px;
+    height: 30px; }
+    .chat-input .input-area input {
+      float: left;
+      width: 80%;
+      height: 30px;
+      outline: none;
+      border-radius: 2px;
+      padding-left: 6px;
+      display: inline-block;
+      border: 1px solid #c9c8c7;
+      border-radius: 5px; }
+    .chat-input .input-area .send-msg-btn {
+      float: right;
+      width: 18%;
+      height: 30px;
+      line-height: 30px;
+      border: none;
+      background: #53a4da;
+      border-radius: 5px;
+      position: relative;
+      top: 0;
+      color: #fff;
+      outline: none;
+      text-align: center; }

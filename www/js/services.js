@@ -45,9 +45,9 @@
         var currentUser = UserService.getProfile();
         if (message) {
           var chatMessage = {
-            from: currentUser.displayName,
+            from_username: currentUser.displayName,
             from_email: currentUser.email,
-            message: message,
+            content: message,
             createdAt: Firebase.ServerValue.TIMESTAMP
           };
           chatMessagesForRoom.$add(chatMessage).then(function (data) {

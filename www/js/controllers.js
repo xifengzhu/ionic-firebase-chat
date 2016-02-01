@@ -86,7 +86,7 @@
     function createRoom(){
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="vm.newRoomName">',
+        templateUrl: './templates/create-room-template.html',
         title: 'Enter Room Name',
         scope: $scope,
         buttons: [
@@ -95,11 +95,10 @@
             text: '<b>Save</b>',
             type: 'button-positive',
             onTap: function(e) {
-              if (!vm.newRoomName) {
+              if (!vm.room.name) {
                 e.preventDefault();
               } else {
-                // return vm.newRoomName;
-                vm.rooms.$add({name: vm.newRoomName});
+                Rooms.save(vm.room);
               }
             }
           }

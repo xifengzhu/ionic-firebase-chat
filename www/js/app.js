@@ -6,7 +6,7 @@
 // 'Chat.controllers' is found in controllers.js
 angular.module('Chat', ['ionic', 'firebase', 'Chat.controllers', 'Chat.services', 'Chat.configs', 'Chat.routes','angular-md5'])
 
-.run(function($ionicPlatform, Auth, $rootScope, $ionicLoading, $location) {
+.run(function($ionicPlatform, Auth, $rootScope, $ionicLoading, $location, UserService, CONFIG) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -23,6 +23,13 @@ angular.module('Chat', ['ionic', 'firebase', 'Chat.controllers', 'Chat.services'
     Auth.$onAuth(function (authData) {
       if (authData) {
         console.log("Logged in as:", authData.uid);
+        var ref = new Firebase(CONFIG.FIREBASE_URL);
+        ref.child("users").child(authData.uid).once('value', function (snapshot) {
+          var user = snapshot.val();
+          $rootScope.currentUser = user;
+          UserService.saveProfile(user);
+          UserService.trackPresence()
+        });
       } else {
         $ionicLoading.hide();
         $location.path('/login');

@@ -6,12 +6,14 @@
     .factory("Auth", Auth)
     .factory("Message", Message)
     .factory("Rooms", Rooms)
-    .service("UserService", UserService);
+    .service("UserService", UserService)
+    .service("FacebookService", FacebookService);
 
     Auth.$inject = ["$firebaseAuth", "CONFIG"];
     Message.$inject = ["$firebaseArray", "Rooms", "CONFIG", "UserService", "md5", "$q"];
-    Rooms.$inject = ["$firebaseArray", "CONFIG"];
+    Rooms.$inject = ["$firebaseArray", "CONFIG", "UserService"];
     UserService.$inject = ["Auth","$q", "$state", "$ionicLoading", "$rootScope", "CONFIG"];
+    FacebookService.$inject = ["$q", "CONFIG"];
 
     function Auth($firebaseAuth, CONFIG){
       var ref = new Firebase(CONFIG.FIREBASE_URL);
@@ -30,7 +32,7 @@
       }
 
       function get(roomId) {
-        chatMessagesForRoom = $firebaseArray(ref.child('rooms').child(roomId).child('messages').orderByChild("createdAt"));
+        chatMessagesForRoom = $firebaseArray(ref.child('room-messages').child(roomId).child('messages').orderByChild("createdAt"));
         return chatMessagesForRoom;
       }
 
@@ -45,8 +47,8 @@
         var currentUser = UserService.getProfile();
         if (message) {
           var chatMessage = {
-            from_username: currentUser.displayName,
-            from_email: currentUser.email,
+            sender_username: currentUser.username,
+            sender_email: currentUser.email,
             content: message,
             createdAt: Firebase.ServerValue.TIMESTAMP
           };
@@ -59,9 +61,9 @@
       }
     }
 
-    function Rooms($firebaseArray, CONFIG){
+    function Rooms($firebaseArray, CONFIG, UserService){
+      var currentUser = UserService.getProfile();
       var ref = new Firebase(CONFIG.FIREBASE_URL);
-      var roomsWithLastMessage = []
       var rooms = $firebaseArray(ref.child('rooms'));
 
       return {
@@ -98,8 +100,25 @@
         createUser: createUser,
         login: login,
         saveProfile: saveProfile,
-        getProfile: getProfile
+        getProfile: getProfile,
+        trackPresence: trackPresence
       }
+
+      function trackPresence(){
+        var currentUser = this.getProfile();
+        // Get a reference to my own presence status.
+        var connectedRef = ref.child('/.info/connected');
+        // Get a reference to the presence data in Firebase.
+        var myConnectionsRef = ref.child('/users/' + currentUser.id +'/connected');
+        connectedRef.on('value', function(isOnline) {
+          if (isOnline.val()) {
+            // If we lose our internet connection, we want ourselves removed from the list.
+            myConnectionsRef.onDisconnect().remove();
+            myConnectionsRef.set(true);
+          }
+        });
+      }
+
 
       function createUser(user){
         var deferred = $q.defer();
@@ -150,6 +169,28 @@
       function getProfile(){
         var user = localStorage.getItem("chat.current_user");
         return user && JSON.parse(user);
+      }
+    }
+
+    function FacebookService($q, CONFIG){
+      var ref = new Firebase(CONFIG.FIREBASE_URL);
+      var deferred = $q.defer();
+      return {
+        login: function(){
+          ref.authWithOAuthPopup("facebook", function(error, authData) {
+            if (error) {
+              console.log("Login Failed!", error);
+              localStorage.clear();
+            } else {
+              // the access token will allow us to make Open Graph API calls
+              // console.log(authData.facebook.accessToken);
+              deferred.resolve(authData);
+            }
+          }, {
+            scope: "email, public_profile" // the permissions requested
+          });
+          return deferred.promise;
+        }
       }
     }
 })();

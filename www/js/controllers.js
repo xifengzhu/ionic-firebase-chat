@@ -7,11 +7,11 @@
     .controller("ChatCtrl", ChatCtrl)
     .controller("RoomsCtrl", RoomsCtrl);
 
-  LoginCtrl.$inject = ["$scope", "$ionicModal", "$state", "$firebaseAuth", "$ionicLoading", "$rootScope", "CONFIG", "UserService"];
+  LoginCtrl.$inject = ["$scope", "$ionicModal", "$state", "$firebaseAuth", "$ionicLoading", "$rootScope", "CONFIG", "UserService", "FacebookService"];
   ChatCtrl.$inject = ['$scope', "Message", "Rooms", "UserService", "$state", "$ionicScrollDelegate"];
   RoomsCtrl.$inject = ['$scope', "Rooms", "Message", "$state", "$ionicPopup"];
 
-  function LoginCtrl($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope, CONFIG, UserService) {
+  function LoginCtrl($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope, CONFIG, UserService, FacebookService) {
 
     var vm = $scope.vm = {};
     var ref = new Firebase(CONFIG.FIREBASE_URL);
@@ -39,6 +39,16 @@
     function login() {
       UserService.login(vm.user);
     }
+
+    function signInWithFaceBook(){
+      FacebookService.login().then(function(userData){
+        ref.child("users").child(userData.uid).set({
+          id: userData.uid,
+          email: userData.facebook.email,
+          username: userData.facebook.displayName
+        });
+        $state.go('tab.rooms');
+      });
     }
   }
 
@@ -83,6 +93,9 @@
         roomId: roomId
       });
     }
+
+
+    console.log(vm.rooms)
 
     function createRoom(){
       // An elaborate, custom popup

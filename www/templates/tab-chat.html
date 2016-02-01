@@ -10,7 +10,7 @@
           </div> -->
           <div class="user-info">
             <a href="javascript:;" class="avatar">
-              <img src="http://www.gravatar.com/avatar/{{ message.from_email | gravatar }}" width="100%">
+              <img ng-src="http://www.gravatar.com/avatar/{{ message.from_email | gravatar }}" width="100%">
             </a>
             <p class="name">{{ message.from_username }}</p>
           </div>

@@ -13,31 +13,32 @@
 
   function LoginCtrl($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope, CONFIG, UserService) {
 
+    var vm = $scope.vm = {};
     var ref = new Firebase(CONFIG.FIREBASE_URL);
     var auth = $firebaseAuth(ref);
+
+    angular.extend(vm, {
+      user        : {},
+      createUser  : createUser,
+      login       : login,
+      signInWithFaceBook: signInWithFaceBook
+    });
 
     $ionicModal.fromTemplateUrl('templates/register.html', {
       scope: $scope
     }).then(function (modal) {
-      $scope.modal = modal;
+      vm.modal = modal;
     });
 
-    $scope.createUser = function (user) {
-      if (user && user.email && user.password && user.displayname) {
-        UserService.createUser(user).then(function(){
-          $scope.modal.hide();
-        })
-      } else {
-        alert("Please fill all details");
-      }
+    function createUser() {
+      UserService.createUser(vm.user).then(function(){
+        vm.modal.hide();
+      })
     }
 
-    $scope.login = function (user) {
-      if (user && user.email && user.password) {
-        UserService.login(user);
-      } else {
-        alert("Please enter email and password both");
-      }
+    function login() {
+      UserService.login(vm.user);
+    }
     }
   }
 
@@ -70,7 +71,7 @@
     var vm = $scope.vm = {};
 
     angular.extend(vm, {
-      newRoomName: "",
+      room: {},
       rooms: Rooms.all(),
 
       openChatRoom: openChatRoom,

@@ -13,27 +13,30 @@
       <span>{{ error.message }}</span>
     </div>
     <div class="list card padding">
-      <label class="item item-input">
-        <span class="input-label">Email</span>
-        <input type="text" ng-model="user.email">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Password</span>
-        <input type="password" ng-model="user.password">
-      </label>
-      <button ng-click="login(user)" class="button button-block button-assertive activated">
-        Sign In
-      </button>
+      <form name="loginForm">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" ng-model="vm.user.email" ng-required="required">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="vm.user.password" ng-required="required">
+        </label>
+        <button ng-click="vm.login()"
+          ng-disabled="!loginForm.$valid"
+          class="button button-block button-assertive activated">
+          Sign In
+        </button>
+      </form>
     </div>
     <div class="list" style="text-align:center">
-      <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+      <button ng-click="vm.modal.show()" class="button button-small button-outline icon-left ion-person-add button-assertive">
         Create New Account
       </button>
 
-      <button ng-click="signInWithFaceBook()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+      <button ng-click="vm.signInWithFaceBook()" class="button button-small button-outline icon-left ion-person-add button-assertive">
         Login with facebook
       </button>
-      <div id="fb-root"></div>
     </div>
   </ion-content>
 </ion-view>

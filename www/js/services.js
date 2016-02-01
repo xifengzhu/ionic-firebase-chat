@@ -68,20 +68,25 @@
         all: function () {
           rooms.$loaded().then(function(response){
             angular.forEach(response, function(room){
-              roomsWithLastMessage.push(room);
               ref.child('rooms').child(room.$id).child('messages')
-                .orderByChild("timestamp")
+                .orderByChild("createdAt")
                 .limitToLast(1)
                 .on("child_added", function(snapshot) {
                   room["last_message_content"] = snapshot.val().content;
                 });
             })
           });
-          return roomsWithLastMessage;
+          return rooms;
         },
+
         get: function (roomId) {
-          // Simple index lookup
           return rooms.$getRecord(roomId);
+        },
+
+        save: function(room){
+          room.createdAt = Firebase.ServerValue.TIMESTAMP;
+          room.ownerId = currentUser.id;
+          rooms.$add(room);
         }
       }
     }
@@ -98,6 +103,7 @@
 
       function createUser(user){
         var deferred = $q.defer();
+        var self = this;
         $ionicLoading.show({
           template: 'Signing Up...'
         });
@@ -106,11 +112,12 @@
           password: user.password
         }).then(function (userData) {
           ref.child("users").child(userData.uid).set({
+            id: userData.uid,
             email: user.email,
-            displayName: user.displayname
+            username: user.username
           });
           $ionicLoading.hide();
-          login(user);
+          login.call(self, user);
           deferred.resolve();
         }).catch(function (error) {
           alert("Error: " + error);
@@ -128,11 +135,6 @@
           email: user.email,
           password: user.password
         }).then(function (authData) {
-          ref.child("users").child(authData.uid).once('value', function (snapshot) {
-            var user = snapshot.val();
-            $rootScope.currentUser = user;
-            self.saveProfile(user);
-          });
           $ionicLoading.hide();
           $state.go('tab.rooms');
         }).catch(function (error) {

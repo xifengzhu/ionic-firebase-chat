@@ -4,15 +4,15 @@
       <div class="chat-msg-items">
         <div class="chat-item"
           ng-repeat="message in vm.messages track by $index"
-          ng-class="{true: 'me', false: 'you'}[message.from_email == vm.currentUser.email ]">
+          ng-class="{true: 'me', false: 'you'}[message.sender_email == vm.currentUser.email ]">
           <!-- <div class="time">
             11: 20
           </div> -->
           <div class="user-info">
             <a href="javascript:;" class="avatar">
-              <img ng-src="http://www.gravatar.com/avatar/{{ message.from_email | gravatar }}" width="100%">
+              <img ng-src="http://www.gravatar.com/avatar/{{ message.sender_email | gravatar }}" width="100%">
             </a>
-            <p class="name">{{ message.from_username }}</p>
+            <p class="name">{{ message.sender_username }}</p>
           </div>
           <div class="msg-panel">
             <div class="msg-text">

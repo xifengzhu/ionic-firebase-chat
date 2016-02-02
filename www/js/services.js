@@ -32,7 +32,7 @@
       }
 
       function get(roomId) {
-        chatMessagesForRoom = $firebaseArray(ref.child('room-messages').child(roomId).child('messages').orderByChild("createdAt"));
+        chatMessagesForRoom = $firebaseArray(ref.child('room-messages').child(roomId).orderByChild("createdAt"));
         return chatMessagesForRoom;
       }
 
@@ -70,7 +70,7 @@
         all: function () {
           rooms.$loaded().then(function(response){
             angular.forEach(response, function(room){
-              ref.child('rooms').child(room.$id).child('messages')
+              ref.child('room-messages').child(room.$id)
                 .orderByChild("createdAt")
                 .limitToLast(1)
                 .on("child_added", function(snapshot) {

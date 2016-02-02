@@ -2,10 +2,10 @@
 IonicFirebaseChat is a sample chat widget powered by Firebase. We created a simple authentication system with email and Facebook support in Ionic.
 
 ### Screenshot
-![Alt text](/screenshots/login.jpg?raw=true "login")
-![Alt text](/screenshots/login-with-facebook.jpg?raw=true "login")
-![Alt text](/screenshots/chat.jpg?raw=true "login")
-![Alt text](/screenshots/add-room.jpg?raw=true "login")
+<img src="/screenshots/login.jpg?raw=true" alt="alt text" height="400px">
+<img src="/screenshots/login-with-facebook.jpg?raw=true" alt="login with facebook" height="400px">
+<img src="/screenshots/chat.jpg?raw=true" alt="chat" height="400px">
+<img src="/screenshots/add-room.jpg?raw=true" alt="add room" height="400px">
 
 ### Setup
 

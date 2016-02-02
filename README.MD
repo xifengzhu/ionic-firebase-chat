@@ -1,13 +1,20 @@
-### Setup
+## IonicFirebaseChat
+IonicFirebaseChat is a sample chat widget powered by Firebase. We created a simple authentication system with email and Facebook support in Ionic.
 
-We used Firebase to create a simple authentication system with email and Facebook support in Ionic to include a real time chat room. 
+### Screenshot
+![Alt text](/screenshots/login.jpg?raw=true "login")
+![Alt text](/screenshots/login-with-facebook.jpg?raw=true "login")
+![Alt text](/screenshots/chat.jpg?raw=true "login")
+![Alt text](/screenshots/add-room.jpg?raw=true "login")
+
+### Setup
 
 ##### 1.Setting up a Firebase Account
 
 In order to user Firebase, you need to have an account with them. Url: https://www.firebase.com/signup/
 
 ##### 2.Setting up a facebook App for Login
-Login the firebase dashbord, and select the `login&&Auth` tab, select the `facebook` tab, fill the `Facebook APP Id ` and `Facebook App Secret`.
+Login the firebase dashboard, and select the `login&&Auth` tab, select the `facebook` tab, fill the `Facebook APP Id ` and `Facebook App Secret`.
 https://developers.facebook.com/
 
 ##### 3.Install the lib by bower

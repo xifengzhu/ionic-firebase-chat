@@ -1,6 +1,6 @@
 ### Setup
 
-ionic-firebase-chat uses Firebase as a backend, so it requires no server-side code. It can be added to any web app by including a few JavaScript files. it's implement facebook login,
+We used Firebase to create a simple authentication system with email and Facebook support in Ionic to include a real time chat room. 
 
 1.Setting up a Firebase Account
 

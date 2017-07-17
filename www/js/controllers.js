@@ -14,8 +14,8 @@
   function LoginCtrl($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope, CONFIG, UserService, FacebookService) {
 
     var vm = $scope.vm = {};
-    var ref = new Firebase(CONFIG.FIREBASE_URL);
-    var auth = $firebaseAuth(ref);
+    var ref = firebase.database().ref();
+    var auth = $firebaseAuth(firebase.auth());
 
     angular.extend(vm, {
       user        : {},

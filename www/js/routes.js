@@ -10,7 +10,7 @@ angular.module('Chat.routes', [])
       controller: 'LoginCtrl',
       resolve: {
         requireNoAuth: function($state, Auth){
-          return Auth.$requireAuth().then(function(auth){
+          return Auth.$requireSignIn().then(function(auth){
             $state.go('tab.rooms');
           }, function(error){
             return;
@@ -25,7 +25,7 @@ angular.module('Chat.routes', [])
       templateUrl: "templates/tabs.html",
       resolve: {
         auth: function($state, Auth){
-          return Auth.$requireAuth().catch(function(){
+          return Auth.$requireSignIn().catch(function(){
             $state.go('login');
           });
         },

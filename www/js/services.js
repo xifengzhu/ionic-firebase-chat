@@ -9,21 +9,20 @@
     .service("UserService", UserService)
     .service("FacebookService", FacebookService);
 
-    Auth.$inject = ["$firebaseAuth", "CONFIG"];
-    Message.$inject = ["$firebaseArray", "Rooms", "CONFIG", "UserService", "md5", "$q"];
-    Rooms.$inject = ["$firebaseArray", "CONFIG", "UserService"];
-    UserService.$inject = ["Auth","$q", "$state", "$ionicLoading", "$rootScope", "CONFIG"];
-    FacebookService.$inject = ["$q", "CONFIG"];
+    Auth.$inject = ["$firebaseAuth", "firebase"];
+    Message.$inject = ["$firebaseArray", "Rooms", "UserService", "md5", "$q", "firebase"];
+    Rooms.$inject = ["$firebaseArray", "UserService", "firebase"];
+    UserService.$inject = ["Auth","$q", "$state", "$ionicLoading", "$rootScope", "firebase"];
+    FacebookService.$inject = ["$q", "firebase"];
 
-    function Auth($firebaseAuth, CONFIG){
-      var ref = new Firebase(CONFIG.FIREBASE_URL);
-      return $firebaseAuth(ref);
+    function Auth($firebaseAuth, firebase){
+      return $firebaseAuth(firebase.auth());
     }
 
-    function Message($firebaseArray, Rooms, CONFIG, UserService, md5, $q){
+    function Message($firebaseArray, Rooms, UserService, md5, $q, firebase){
       var selectedRoomId;
       var chatMessagesForRoom;
-      var ref = new Firebase(CONFIG.FIREBASE_URL);
+      var ref = firebase.database().ref();
 
       return {
         get     : get,
@@ -50,7 +49,7 @@
             sender_username: currentUser.username,
             sender_email: currentUser.email,
             content: message,
-            createdAt: Firebase.ServerValue.TIMESTAMP
+            createdAt: firebase.database.ServerValue.TIMESTAMP
           };
           chatMessagesForRoom.$add(chatMessage).then(function (data) {
             deferred.resolve();
@@ -61,9 +60,9 @@
       }
     }
 
-    function Rooms($firebaseArray, CONFIG, UserService){
+    function Rooms($firebaseArray, UserService, firebase){
       var currentUser = UserService.getProfile();
-      var ref = new Firebase(CONFIG.FIREBASE_URL);
+      var ref = firebase.database().ref();
       var rooms = $firebaseArray(ref.child('rooms'));
 
       return {
@@ -86,15 +85,15 @@
         },
 
         save: function(room){
-          room.createdAt = Firebase.ServerValue.TIMESTAMP;
+          room.createdAt = firebase.database.ServerValue.TIMESTAMP;
           room.ownerId = currentUser.id;
           rooms.$add(room);
         }
       }
     }
 
-    function UserService(Auth, $q, $state, $ionicLoading, $rootScope, CONFIG){
-      var ref = new Firebase(CONFIG.FIREBASE_URL);
+    function UserService(Auth, $q, $state, $ionicLoading, $rootScope, firebase){
+      var ref = firebase.database().ref();
 
       return {
         createUser: createUser,
@@ -126,10 +125,7 @@
         $ionicLoading.show({
           template: 'Signing Up...'
         });
-        Auth.$createUser({
-          email: user.email,
-          password: user.password
-        }).then(function (userData) {
+        Auth.$createUserWithEmailAndPassword(user.email, user.password).then(function (userData) {
           ref.child("users").child(userData.uid).set({
             id: userData.uid,
             email: user.email,
@@ -150,10 +146,7 @@
         $ionicLoading.show({
           template: 'Signing In...'
         });
-        Auth.$authWithPassword({
-          email: user.email,
-          password: user.password
-        }).then(function (authData) {
+        Auth.$signInWithEmailAndPassword(user.email, user.password).then(function (authData) {
           $ionicLoading.hide();
           $state.go('tab.rooms');
         }).catch(function (error) {
@@ -172,12 +165,12 @@
       }
     }
 
-    function FacebookService($q, CONFIG){
-      var ref = new Firebase(CONFIG.FIREBASE_URL);
+    function FacebookService($q, firebase){
+      var ref = firebase.database().ref();
       var deferred = $q.defer();
       return {
         login: function(){
-          ref.authWithOAuthPopup("facebook", function(error, authData) {
+          ref.signInWithPopup("facebook", function(error, authData) {
             if (error) {
               console.log("Login Failed!", error);
               localStorage.clear();

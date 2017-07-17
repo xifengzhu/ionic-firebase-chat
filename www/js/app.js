@@ -6,7 +6,7 @@
 // 'Chat.controllers' is found in controllers.js
 angular.module('Chat', ['ionic', 'firebase', 'Chat.controllers', 'Chat.services', 'Chat.configs', 'Chat.routes','angular-md5'])
 
-.run(function($ionicPlatform, Auth, $rootScope, $ionicLoading, $location, UserService, CONFIG) {
+.run(function($ionicPlatform, Auth, $rootScope, $ionicLoading, $location, UserService, firebase) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,10 +20,11 @@ angular.module('Chat', ['ionic', 'firebase', 'Chat.controllers', 'Chat.services'
       StatusBar.styleDefault();
     }
 
-    Auth.$onAuth(function (authData) {
+
+    Auth.$onAuthStateChanged(function (authData) {
       if (authData) {
         console.log("Logged in as:", authData.uid);
-        var ref = new Firebase(CONFIG.FIREBASE_URL);
+        var ref = firebase.database().ref();
         ref.child("users").child(authData.uid).once('value', function (snapshot) {
           var user = snapshot.val();
           $rootScope.currentUser = user;
@@ -36,13 +37,13 @@ angular.module('Chat', ['ionic', 'firebase', 'Chat.controllers', 'Chat.services'
       }
     });
 
-    // $rootScope.logout = function () {
-    //   console.log("Logging out from the app");
-    //   $ionicLoading.show({
-    //     template: 'Logging Out...'
-    //   });
-    //   Auth.$unauth();
-    // }
+    $rootScope.logout = function () {
+      console.log("Logging out from the app");
+      $ionicLoading.show({
+        template: 'Logging Out...'
+      });
+      Auth.$unauth();
+    }
 
     $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
       // We can catch the error thrown when the $requireAuth promise is rejected
